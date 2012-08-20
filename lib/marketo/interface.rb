@@ -40,6 +40,7 @@ module Marketo
 
       lead = ParamsGetLead.new("COOKIE", cookie)
       response = send_request("ns1:paramsGetLead", {:lead_key => lead.to_hash})
+      puts response.inspect
       return Lead.from_hash(response[:success_get_lead][:result][:lead_record_list][:lead_record])
     end
     
