@@ -46,8 +46,6 @@ module Marketo
     
 
     def sync_lead(cookie, user_args = {})
-      raise Exception, "Email must be provided" if email.nil?
-
       if(cookie.nil? || (cookie.include?("token:") == false))
         @cookie = ""
       else
