@@ -43,16 +43,16 @@ module Marketo
       return Lead.from_hash(response[:success_get_lead][:result][:lead_record_list][:lead_record])
     end
     
-    
+    def sync_lead(email, cookie, user_args = {})
+      raise Exception, "Email must be provided" if email.nil?
 
-    def sync_lead(cookie, user_args = {})
       if(cookie.nil? || (cookie.include?("token:") == false))
         @cookie = ""
       else
         @cookie = cookie.slice!(cookie.index("token:")..-1)
       end
 
-      lead = ParamsSyncLead.new(cookie, user_args)
+      lead = ParamsSyncLead.new(email, user_args)
       response = send_request("ns1:paramsSyncLead", {:return_lead => true, :lead_record => lead.to_hash, :marketo_cookie => @cookie})
       return Lead.from_hash(response[:success_sync_lead][:result][:lead_record])
     end
